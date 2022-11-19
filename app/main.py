@@ -4,9 +4,9 @@ from fastapi import Depends, FastAPI, UploadFile, Query
 from sqlalchemy.orm import Session
 import pandas as pd
 
-import models
-import services
-from database import SessionLocal, engine
+from . import models
+from . import services
+from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 

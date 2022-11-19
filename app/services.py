@@ -2,7 +2,7 @@ from typing import Union
 from sqlalchemy.orm import Session
 import pandas as pd
 
-import models
+from . import models
 
 
 def save_bills(df : pd.DataFrame, db : Session):
