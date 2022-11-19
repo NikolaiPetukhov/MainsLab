@@ -24,12 +24,12 @@ def save_bills(df : pd.DataFrame, db : Session):
                 db.rollback()
     return bills_count
 
-def __get_bills(db : Session, org_name : Union[str, None], client_name : Union[str, None] = None):
+def __get_bills(db : Session, org_name : Union[list[str], None], client_name : Union[list[str], None] = None):
     q = db.query(models.Bill)
     if not org_name is None:
-        q = q.filter(models.Bill.org.has(models.Org.name == org_name))
+        q = q.filter(models.Bill.org.has(models.Org.name.in_(org_name)))
     if not client_name is None:
-        q = q.filter(models.Bill.org.has(models.Org.client_name == client_name))
+        q = q.filter(models.Bill.org.has(models.Org.client_name.in_(client_name)))
     return q.all()
 
 def get_bills_dto(db : Session, org_name : Union[str, None], client_name : Union[str, None] = None):

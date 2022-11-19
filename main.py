@@ -1,6 +1,6 @@
 from typing import Union
 
-from fastapi import Depends, FastAPI, UploadFile
+from fastapi import Depends, FastAPI, UploadFile, Query
 from sqlalchemy.orm import Session
 import pandas as pd
 
@@ -29,5 +29,5 @@ async def upload(file: UploadFile, db: Session = Depends(get_db)):
 
 
 @app.get("/bills")
-def read_item(org: Union[str, None] = None, client: Union[str, None] = None, db: Session = Depends(get_db)):
+def read_item(org: Union[list[str], None] = Query(default=None), client: Union[list[str], None] = Query(default=None), db: Session = Depends(get_db)):
     return services.get_bills_dto(db, org, client)
